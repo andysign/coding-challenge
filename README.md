@@ -1,10 +1,14 @@
 # Coding Challenge
 
-The details of the coding challange
+The details of the coding challange: **[Full-stack-Engineer.pdf](Full-stack-Engineer.pdf)** and as a side note: explanation why take-home tests are the best way for you to show off your skills **[www.paxos.com/engineering/why-take-home-tests-are-awesome](https://www.paxos.com/engineering/why-take-home-tests-are-awesome)**
 
-**[Full-stack-Engineer.pdf](Full-stack-Engineer.pdf)**
+**Table of Contents**
 
-As a side note: explanation why take-home tests are the best way for you to show off your skills **[www.paxos.com/engineering/why-take-home-tests-are-awesome](https://www.paxos.com/engineering/why-take-home-tests-are-awesome)**
+* **[Challenge #1](#challenge-1---programming)**
+* **[Challenge #2](#challenge-2---programming)**
+* **[Challenge #3](#challenge-3---programming)**
+
+----
 
 # Challenge #1 - Programming
 
