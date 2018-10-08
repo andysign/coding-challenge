@@ -12,7 +12,13 @@ TBD
 
 # Challenge #2 - Programming
 
-TBD
+## Problem
+
+What is required for this challange
+
+## Solution
+
+There are three approaches to solve this problem (1) brute force, (2) use binary and search on the sorted array, and (3) use the hashtables, the last one is the best one but only if what is required is to find the perfect match of two items that when adding the two items the result is exactly the amount of the gift card.
 
 # Challenge #3 - Programming
 
