@@ -41,11 +41,9 @@ names  = items.map( function(e){ return e.split(', ')[0]+' '; } );
 // Init the best modified binary search vars
 let left = 0, right = prices.length-1, found = false;
 let bestx = besty = bestnx = bestny = null;
-
 console.log(prices); console.log("T",t);
 
-while(left<right) {
-	console.log("lr", left, right)
+while(left<right) { console.log("lr", left, right)
 	x = prices[left]; y = prices[right];
 	console.log("newxy",bestx,besty);
 	if ( x+y == t ) {
@@ -62,7 +60,7 @@ while(left<right) {
 	}
 	else if ( x+y < t ) {
 		console.log("small");
-		if ( t-(bestx+besty) >= t-(x+y) ) {
+		if ( t-bestx-besty >= t-x-y ) {
 			bestnx = names[left];
 			bestny = names[right];
 			bestx = x;
