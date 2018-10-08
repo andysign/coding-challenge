@@ -34,40 +34,48 @@ items = filestr.split('\n');
 prices = items.map( function(e){ return 1*e.split(', ')[1]; } );
 names  = items.map( function(e){ return e.split(', ')[0]+' '; } );
 
-// Init the best modified binary search vars
-let left = 0, right = prices.length-1, found = false; // console.log(prices);
-let bestx = besty = bestnx = bestny = null; // console.log("T",t);
+// Function designed to use binary search and search for the best pair
+function findPairOfItems(prices, names) {
+	// Init the best modified binary search vars
+	let left = 0, right = prices.length-1, found = false; // console.log(prices)
+	let bestx = besty = bestnx = bestny = null; // console.log("T",t);
 
-while(left<right) { //console.log("lr", left, right)
-	x = prices[left]; y = prices[right]; //console.log("newxy",bestx,besty);
-	if ( x+y == t ) { //console.log("FOUND");
-		found = true;
-		bestnx = names[left];
-		bestny = names[right];
-		bestx = x;
-		besty = y;
-	}
-	else if ( x+y > t ) { //console.log("XYTOBIG");
-		right--;
-	}
-	else if ( x+y < t ) { //console.log("small");
-		if ( t-bestx-besty >= t-x-y ) {
+	while(left<right) { //console.log("lr", left, right)
+		x = prices[left]; y = prices[right]; //console.log("newxy",bestx,besty);
+		if ( x+y == t ) { //console.log("FOUND");
+			found = true;
 			bestnx = names[left];
 			bestny = names[right];
 			bestx = x;
 			besty = y;
 		}
-		left++;
+		else if ( x+y > t ) { //console.log("XYTOBIG");
+			right--;
+		}
+		else if ( x+y < t ) { //console.log("small");
+			if ( t-bestx-besty >= t-x-y ) {
+				bestnx = names[left];
+				bestny = names[right];
+				bestx = x;
+				besty = y;
+			}
+			left++;
+		}
+		if(found) break; //console.log("---")
 	}
-	if(found) break; //console.log("---")
+	return {bestx:bestx,besty:besty,bestnx:bestnx,bestny:bestny};
 }
 
-if ( bestx!=null && besty!=null ) {
-	console.log(bestnx+bestx +', '+ bestny+besty);
+let res = findPairOfItems(prices,names);
+
+if ( res.bestx!=null && res.besty!=null ) {
+	console.log(res.bestnx+res.bestx +', '+ res.bestny+res.besty);
 } else {
 	console.log("Not possible");
 }
 
+exports.fintems = res;
+
 // Old version with hash map, not working for best x and y only for fix match
-// mp = new Map(); T=5;  for (i=0; i<prices.length; i++) mp.set( prices[i] , T - prices[i] );
-// for (i=0;i<prices.length;i++) if (mp.get( T/*12*/ - i )) console.log(T-i, mp.get(T-i));
+// mp = new Map(); t=5;  for (i=0; i<prices.length; i++) mp.set( prices[i] , t - prices[i] );
+// for (i=0;i<prices.length;i++) if (mp.get( t - i )) console.log(t-i, mp.get(t-i));
