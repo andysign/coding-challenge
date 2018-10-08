@@ -14,6 +14,22 @@
 #
 # for x in range(2**exp): print(interleaved(bin(x)[2:].rjust(exp, '0')))
 
+
+# import asyncio
+# 
+# async def coroutine_1():
+# 	for x in range(0,int((2**n)**(1/2))):
+# 		print(bin(x)[2:].rjust(n, '0'))
+# 
+# async def coroutine_2():
+# 	for x in range(int((2**n)**(1/2)),(2**n)):
+# 		print(bin(x)[2:].rjust(n, '0'))
+# 
+# loop = asyncio.get_event_loop()
+# 
+# loop.run_until_complete(asyncio.gather(coroutine_1(), coroutine_2()))
+
+
 from sys import argv
 from asyncio import Queue
 from itertools import zip_longest
