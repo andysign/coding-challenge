@@ -46,7 +46,7 @@ What is required for this challange
 
 ## Solution
 
-The solution can be found in [challange3](challange3) / [interleaved-bin.py](challange3/interleaved-bin.py)
+The solution can be found in [challenge3](challenge3) / [interleaved-bin.py](challenge3/interleaved-bin.py)
 
 The solution is done in python3, (Python 3.5.2 to be more exact but the code can be edited to workin in python legacy without much effort.
 
