@@ -38,18 +38,43 @@ names  = items.map( function(e){ return e.split(', ')[0]+' '; } );
 // mp = new Map(); T=5;  for (i=0; i<prices.length; i++) mp.set( prices[i] , T - prices[i] );
 // for (i=0;i<prices.length;i++) if (mp.get( T/*12*/ - i )) console.log(T-i, mp.get(T-i));
 
-left = 0; right = prices.length-1; found = false;
-bestx = null; besty = null; bestnx = null; bestny = null;
+// Init the best modified binary search vars
+let left = 0, right = prices.length-1, found = false;
+let bestx = besty = bestnx = bestny = null;
 
 console.log(prices); console.log("T",t);
 
 while(left<right) {
-console.log("lr", left, right)
-x = prices[left]; y = prices[right]; console.log("newxy",bestx,besty);
-if ( x+y == t ) { console.log("FOUND"); found = true; bestnx = names[left]; bestny = names[right]; bestx = x; besty = y; }
-if ( x+y > t ) { console.log("XYTOBIG"); right--; }
-if ( x+y < t ) { console.log("small"); bestnx = names[left]; bestny = names[right]; bestx = x; besty = y; left++; }
-if(found) break;
-console.log("---")
+	console.log("lr", left, right)
+	x = prices[left]; y = prices[right];
+	console.log("newxy",bestx,besty);
+	if ( x+y == t ) {
+		console.log("FOUND");
+		found = true;
+		bestnx = names[left];
+		bestny = names[right];
+		bestx = x;
+		besty = y;
+	}
+	else if ( x+y > t ) {
+		console.log("XYTOBIG");
+		right--;
+	}
+	else if ( x+y < t ) {
+		console.log("small");
+		if ( t-(bestx+besty) >= t-(x+y) ) {
+			bestnx = names[left];
+			bestny = names[right];
+			bestx = x;
+			besty = y;
+		}
+		left++;
+	}
+	if(found) break;
+	console.log("---")
 }
-if (bestx!=null&&besty!=null) {console.log(bestnx+bestx +', '+ bestny+besty);} else {console.log("Not possible");}
+if ( bestx!=null && besty!=null ) {
+	console.log(bestnx+bestx +', '+ bestny+besty);
+} else {
+	console.log("Not possible");
+}
