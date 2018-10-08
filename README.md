@@ -10,15 +10,88 @@ As a side note: explanation why take-home tests are the best way for you to show
 
 TBD
 
+----
+
 # Challenge #2 - Programming
 
 ## Problem
 
 What is required for this challange
 
+> **Introduction**
+>
+> You have been given a gift card that is about to expire and you want to buy gifts for 2 friends.
+>
+> You want to spend the whole gift card, or if that’s not an option as close to the balance as possible. You have a list of sorted prices for a popular store that you know they both like to shop at. Your challenge is to find two distinct items in the list whose sum is minimally under (or equal to) the gift card balance.
+>
+> The file contains two columns:
+>
+> 1. A unique identifier of the item. You can assume there are no duplicates.
+>
+> 2. The value of that item in cents. It is always a positive integer that represents the price in
+> cents (1000 = $10.00).
+>
+> Write a program to find the best two items. It takes two inputs:
+>
+> 1. A filename with a list of sorted prices
+>
+> 2. The balance of your gift card
+>
+> If no two items have a sum that is less than or equal to the balance on the gift card, print “Not possible”. You don’t have to return every possible pair that is under the balance, just one such pair.
+
+> **Example**
+>
+> Some examples:
+>
+> ```
+> $ cat prices.txt
+> Candy Bar, 500
+> Paperback Book, 700
+> Detergent, 1000
+> Headphones, 1400
+> Earmuffs, 2000
+> Bluetooth Stereo, 6000
+>
+> $ find-pair prices.txt 2500
+> Candy Bar 500, Earmuffs 2000
+>
+> $ find-pair prices.txt 2300
+> Paperback Book 700, Headphones 1400
+>
+> $ find-pair prices.txt 10000
+> Earmuffs 2000, Bluetooth Stereo 6000
+>
+> $ find-pair prices.txt 1100
+> Not possible
+> ```
+
+
+> Note: There may be many rows in the file, so be sure to optimize your solution to scale.
+> What is the big O notation for your program?
+
 ## Solution
 
-There are three approaches to solve this problem (1) brute force, (2) use binary and search on the sorted array, and (3) use the hashtables, the last one is the best one but only if what is required is to find the perfect match of two items that when adding the two items the result is exactly the amount of the gift card.
+The code can be found in [challenge2](challenge2) / [fintems.js](challenge2/fintems.js)
+
+There are three approaches to solve this problem (1) brute force, (2) use binary and search on the sorted array, and (3) ~~use the hashtables~~.
+
+The last one is the best one but only if what is required is to find the perfect match of two items that when adding the two items the result is exactly the amount of the gift card.
+
+The first approach, as in to use **brute force**, gives unfortunately a time complexity of `O(n^2)` and a space complexity something that looks similar.
+
+The third approach, **hashtables**, cannot be used in this example at all but as an idea, just for the record, inserting every el into a hash table is easy. This takes `O(n)` as constant time insertion. After that for every x, we can just look up its complement, `T-x`, which is `O(1)`. Overall it takes will be `O(n)`.
+
+Just for the record this would look something like:
+
+```javascript
+mp = new Map(); for (i=0; i<prices.length; i++) mp.set( prices[i] , t - prices[i] ); for (i=0;i<prices.length;i++) if (mp.get( t - i )) console.log(t-i, mp.get(t-i));
+```
+
+Finally the only option left is to use the second approach as in, use something that looks like a **binary search** algorithm. In general a normal *binary search* algorithm has a complexity of `O(log n)` but because of other things like preparing the array the final solution will take `O(n log n)`.
+
+The final solution will be a loop that takes the first and last element and sum them up. After that check if sum is equal to t total desired we have found the pair, but if sum is greater than t, we reduce right pointer by 1, and so on...
+
+----
 
 # Challenge #3 - Programming
 
