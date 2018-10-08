@@ -41,25 +41,21 @@ names  = items.map( function(e){ return e.split(', ')[0]+' '; } );
 // Init the best modified binary search vars
 let left = 0, right = prices.length-1, found = false;
 let bestx = besty = bestnx = bestny = null;
-console.log(prices); console.log("T",t);
+// console.log(prices); console.log("T",t);
 
-while(left<right) { console.log("lr", left, right)
-	x = prices[left]; y = prices[right];
-	console.log("newxy",bestx,besty);
-	if ( x+y == t ) {
-		console.log("FOUND");
+while(left<right) { //console.log("lr", left, right)
+	x = prices[left]; y = prices[right]; //console.log("newxy",bestx,besty);
+	if ( x+y == t ) { //console.log("FOUND");
 		found = true;
 		bestnx = names[left];
 		bestny = names[right];
 		bestx = x;
 		besty = y;
 	}
-	else if ( x+y > t ) {
-		console.log("XYTOBIG");
+	else if ( x+y > t ) { //console.log("XYTOBIG");
 		right--;
 	}
-	else if ( x+y < t ) {
-		console.log("small");
+	else if ( x+y < t ) { //console.log("small");
 		if ( t-bestx-besty >= t-x-y ) {
 			bestnx = names[left];
 			bestny = names[right];
@@ -68,8 +64,7 @@ while(left<right) { console.log("lr", left, right)
 		}
 		left++;
 	}
-	if(found) break;
-	console.log("---")
+	if(found) break; //console.log("---")
 }
 if ( bestx!=null && besty!=null ) {
 	console.log(bestnx+bestx +', '+ bestny+besty);
