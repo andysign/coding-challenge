@@ -71,7 +71,7 @@ What is required for this challange
 
 ## Solution
 
-The code can be found in [challenge2](challenge2) / [fintems.js](challenge2/fintems.js)
+The code can be found in [challenge2](challenge2) / [fintems.js](challenge2/fintems.js) and it is written in `NodeJs 8`. One can run the code with simply `./fintems.js filename 1000` if the *fintems* is changed to *chmod* exacutable.
 
 There are three approaches to solve this problem (1) brute force, (2) use binary and search on the sorted array, and (3) ~~use the hashtables~~.
 
@@ -125,7 +125,7 @@ What is required for this challange
 
 ## Solution
 
-The solution can be found in [challenge3](challenge3) / [interleaved-bin.py](challenge3/interleaved-bin.py)
+The solution can be found in [challenge3](challenge3) / [interleaved-bin.py](challenge3/interleaved-bin.py) and one can run the script with `./interleaved-bin.py 10X10X0` if interleaved is *chmod* executable.
 
 The solution is done in python3, (Python 3.5.2 to be more exact but the code can be edited to workin in python legacy without much effort.
 
