@@ -1,9 +1,21 @@
 #!/usr/bin/nodejs
-filename = process.argv[2];
-total = process.argv[3];
+/*
+* Script crafted to to find one pair of prices from a sorterd list of prices
+* that when combined the resulted value is equal or less then a given total.
+* Usage: ./fintem.js ["FILENAME"] ["TOTAL"]
+* Where: ["FILENAME"] is the file similar to: Headphones, 1400\nBox, 100\n
+* And where: ["TOTAL"] is the desired total of the pair
+* Will return: the pair of items with prices or "Not possible"
+* Usage2: node fintem.js
+*/
+
+const fs = require('fs');
+
+const filename = process.argv[2];
+const total = process.argv[3];
 fn = filename ? filename : 'prices.txt';
 t  = total ? total : 2500;
-fs = require('fs'); path = require('path'); __dirname = path.resolve(path.dirname('')); fpath = __dirname + '/' + 'prices.txt'; filestr = fs.readFileSync(fpath, {encoding:'utf8'}).trim(); items = filestr.split('\n');
+path = require('path'); __dirname = path.resolve(path.dirname('')); fpath = __dirname + '/' + 'prices.txt'; filestr = fs.readFileSync(fpath, {encoding:'utf8'}).trim(); items = filestr.split('\n');
 
 
 prices = items.map( function(e){ return 1*e.split(', ')[1]; } );
