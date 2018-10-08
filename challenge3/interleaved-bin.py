@@ -1,34 +1,9 @@
 #!/usr/bin/python3
 """
 	Python program to generate and print based on a given string of 1s, 0s and
-	Xs, every possible combination where X is replaced with ​both 0 and 1.
+	Xs, every possible combination where X is replaced with both 0 and 1.
 	Usage: ./interleaved-bin.py 10X10X0
 """
-# #https://stackoverflow.com/questions/12325868/#12329085
-# import sys, itertools
-# strarg = sys.argv[1] if len(sys.argv)>1 else "XX"
-# exp = len(strarg.replace("1","").replace("0",""))
-# def interleaved(strvar):
-# 	interleav=itertools.zip_longest(strarg.split("X"),list(strvar),fillvalue='')
-# 	return "".join([x for t in interleav for x in t])
-#
-# for x in range(2**exp): print(interleaved(bin(x)[2:].rjust(exp, '0')))
-
-
-# import asyncio
-# 
-# async def coroutine_1():
-# 	for x in range(0,int((2**n)**(1/2))):
-# 		print(bin(x)[2:].rjust(n, '0'))
-# 
-# async def coroutine_2():
-# 	for x in range(int((2**n)**(1/2)),(2**n)):
-# 		print(bin(x)[2:].rjust(n, '0'))
-# 
-# loop = asyncio.get_event_loop()
-# 
-# loop.run_until_complete(asyncio.gather(coroutine_1(), coroutine_2()))
-
 
 from sys import argv
 from asyncio import Queue
@@ -66,3 +41,27 @@ for _ in range(2**exp-1, 0, -1):
 	
 	# Append "1" to f2 and enqueue it. Here f2 contains the prev front
 	queue.put_nowait(f2 + "1")
+
+# #https://stackoverflow.com/questions/12325868/#12329085
+# import sys, itertools
+# strarg = sys.argv[1] if len(sys.argv)>1 else "XX"
+# exp = len(strarg.replace("1","").replace("0",""))
+# def interleaved(strvar):
+# 	interleav=itertools.zip_longest(strarg.split("X"),list(strvar),fillvalue='')
+# 	return "".join([x for t in interleav for x in t])
+#
+# for x in range(2**exp): print(interleaved(bin(x)[2:].rjust(exp, '0')))
+
+# import asyncio
+#
+# async def coroutine_1():
+# 	for x in range(0,int((2**n)**(1/2))):
+# 		print(bin(x)[2:].rjust(n, '0'))
+#
+# async def coroutine_2():
+# 	for x in range(int((2**n)**(1/2)),(2**n)):
+# 		print(bin(x)[2:].rjust(n, '0'))
+#
+# loop = asyncio.get_event_loop()
+#
+# loop.run_until_complete(asyncio.gather(coroutine_1(), coroutine_2()))
