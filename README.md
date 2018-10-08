@@ -8,7 +8,48 @@ As a side note: explanation why take-home tests are the best way for you to show
 
 # Challenge #1 - Programming
 
-TBD
+## Problem
+
+What is required for this challange
+
+> **Introduction**
+>
+> Publish a small service on the web that has two endpoints:
+>
+> 1. **/messages** takes a message (a string) as a POST and returns the SHA256 hash digest of that message (in hexadecimal format)
+>
+> 2. **/messages/< hash >** is a GET request that returns the original message. A request to a non-existent <hash> should return a 404 error.
+>
+> **Example**
+
+>```
+>$ curl http://mywebsite.com/messages/2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae
+> {
+> "message": "foo"
+> }
+> $ curl -i
+> http://mywebsite.com/messages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+> HTTP/1.0 404 NOT FOUND
+> Content-Type: application/json
+> Content-Length: 36
+> Server: Werkzeug/0.11.5 Python/3.5.1
+> Date: Wed, 31 Aug 2016 14:21:11 GMT
+> {
+> "err_msg": "Message not found"
+> }
+> (your specifics may vary, all that matters is that you get a 404)
+>```
+
+> Hnt: When does ordering of messages you POST vs digests you GET matter?
+
+> **Performance Question**
+
+> What would the bottleneck(s) be in your implementation as you acquire more users? How you might scale your microservice?
+
+
+## Solution
+
+TBA!
 
 ----
 
@@ -68,6 +109,10 @@ What is required for this challange
 
 > Note: There may be many rows in the file, so be sure to optimize your solution to scale.
 > What is the big O notation for your program?
+
+> **Bonus Question (optional)**
+
+> You are considering giving gifts to more people. Instead of choosing exactly 2 items, allow for 3 gifts.
 
 ## Solution
 
