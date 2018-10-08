@@ -6,7 +6,7 @@
 * Where: ["FILENAME"] is the file similar to: Headphones, 1400\nBox, 100\n
 * And where: ["TOTAL"] is the desired total of the pair
 * Will return: the pair of items with prices or "Not possible"
-* Usage2: node fintem.js
+* Usage2: node fintem.js ["FILENAME"] ["TOTAL"]
 */
 
 const fs = require('fs');
