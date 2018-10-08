@@ -25,7 +25,7 @@ const t  = total ? total : 2500;
 // Read the file and store the content in a simple str
 __dirname = path.resolve(path.dirname('')) + '/';
 __dirname = (fn.includes('/')||fn.includes('\\')) ? '' : __dirname;
-const fpath = __dirname + '/' + fn;
+const fpath = __dirname + fn;
 const filestr = fs.readFileSync(fpath, {encoding:'utf8'}).trim();
 
 // Get the prices and names
