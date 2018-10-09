@@ -102,6 +102,18 @@ Connection: keep-alive
 }
 ```
 
+In terms of problems like bottlenecks, if the server gets hit with a lot of traffic by a lot of users, the the best way would be to scale using standard scalable solutions provided by AWS and so on.
+
+If the assumption is there will be a lot of users from day one then the best approach is to build the application in the following way.
+
+At first the user will create the hash in the browser then based on the first hexadecimal digit of the hash connect to to another server to save the entire hash and the message after proper verifications.
+
+For example: *if* `hash('foo')` starts with `'2'` *then* connect to server number 3 from a subset of 16 servers trough ip X.Y.0.2 then save the data there after making sure the hash provided is actually hash of *foo* , same way for a hash that starts with `3` and so on...
+
+A more complex idea would be to use the something similar to the **Ethereum Modified Merkle-Paricia-Trie System**.
+
+Last but not least, if the message is fixed in length and the lenght is reasonably small, one can compute a large  [RainbowTable](http://kestas.kuliukas.com/RainbowTables/) meaning the database will remain more or less static.
+
 ----
 
 # Challenge #2 - Programming
@@ -186,6 +198,8 @@ mp = new Map(); for (i=0; i<prices.length; i++) mp.set( prices[i] , t - prices[i
 Finally the only option left is to use the second approach as in, use something that looks like a **binary search** algorithm. In general a normal *binary search* algorithm has a complexity of `O(log n)` but because of other things like preparing the array the final solution will take `O(n log n)`.
 
 The final solution will be a loop that takes the first and last element and sum them up. After that check if sum is equal to t total desired we have found the pair, but if sum is greater than t, we reduce right pointer by 1, and so on...
+
+If the we want to find a pair of 3 numbers therefore 3 gifts, then a similar binary search function can be crafted to find `x,y,z`. Here we will need to go trough all the numbers like first select z as one of the first numbers then do a binary search for x,y where the condition is `(x+y)<=(t-z)` and of course keep `bestX,bestY,bestZ` then select another item for Z and get bestX,Y,Z again and so on and then give only the pair of 3 that is just under t the desired total which is the value of the gift card.
 
 ----
 
