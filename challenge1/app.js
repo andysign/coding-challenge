@@ -1,8 +1,27 @@
-express = require('express');
-app = express();
-router = new express.Router();
+/*
+* App crafter to calculate digest hashes of messages and save them then return
+* the original messages based on digest hashes
+* USAGE:
+* RUNNING: node app.js
+* TEST: open browser and naviget to
+* http://<IP>:8080/messages
+* http://<IP>:8080/messages/12...
+*/
 
-//app.get('/', function(req, resp) { resp.end('TEST'); });
+const express = require('express');
+const mongo = require('mongodb');
+const parser = require('body-parser');
+const crypto = require('crypto');
+const app = express();
+const router = new express.Router();
+
+const DBPWD = process.env.DBPWD ? process.env.DBPWD : process.argv[2];
+
+const DBHOST = 'ds125263.mlab.com:25263';
+const DBACC  = 'guest';
+
+let db;
+
 
 app.get('/', function(req,res) {
 	res.send('<html><head><title>Index</title></head><body>'+
@@ -10,10 +29,12 @@ app.get('/', function(req,res) {
 	'</body></body></html>');
 }).post('/', function(req,res){ res.status(404).end('404'); });
 
+app.use(parser.urlencoded({extended:true}));
 app.use('/messages', router);
 
 router.get('', function(req,res) {
-	res.send("Must POST!");
+	res.end('<form action="#" method="POST"><input name="msg">'+
+			'<button type="submit">Submit</button></form>');
 }).post('', function(req,res) {
 	res.send("Cool, you are posting...");
 });
@@ -30,5 +51,8 @@ router.get('/:hash([a-fA-F0-9]+)', function(req,res) {
 	res.send("No POST just GET");
 });
 
- 
-var server = app.listen(8080, ()=>{console.log("http://localhost:8080"); })
+mongo.connect('mongodb://'+DBACC+':'+DBPWD+'@'+DBHOST+'/andy-bit', (e,dbcli)=>{
+	if(e) return console.log(e);
+	db = dbcli.db('andy-bit');
+	var server = app.listen(8080, ()=>{console.log("http://localhost:8080");})
+});
