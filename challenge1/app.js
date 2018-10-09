@@ -29,14 +29,20 @@ app.get('/', function(req,res) {
 	'</body></body></html>');
 }).post('/', function(req,res){ res.status(404).end('404'); });
 
-app.use(parser.urlencoded({extended:true}));
-app.use('/messages', router);
+app.use(parser.urlencoded({extended:true}))
+	.use('/messages', router);
 
 router.get('', function(req,res) {
-	res.end('<form action="#" method="POST"><input name="msg">'+
-			'<button type="submit">Submit</button></form>');
+	res.send('<html><head><title>Sha</title></head><body>'+
+	'<h2>Submit message for sha256 hashing</h2>'+
+	'<form action="/messages" method="POST">'+
+	'<input placeholder="foo" name="message">'+
+	'<button type="submit">Submit</button>'+
+	'</form></body></body></html>');
 }).post('', function(req,res) {
-	res.send("Cool, you are posting...");
+	let message = req.body.message;
+	let hash = crypto.createHash('sha256').update(message).digest('hex');
+	res.send(hash);
 });
 
 router.get('/:hash([a-fA-F0-9]+)', function(req,res) {
