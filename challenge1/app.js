@@ -47,18 +47,25 @@ router.get('', function(req,res) {
 
 router.get('/:hash([a-fA-F0-9]+)', function(req,res) {
 	res.set({'Content-Type': 'application/json'});
-	if (req.params.hash=='abc123') {
-		res.send(JSON.stringify({message:req.params.hash},null,' '));
-	} else {
-		var errmsg = 'Message not found';
-		res.status(404).send(JSON.stringify({err_msg:errmsg},null,' '));
-	}
+	let hash = req.params.hash;
+	let cursor = db.collection('messages')
+					.find({hash:hash},{projection:{_id:0,hash:0}}).limit(1);
+	cursor.toArray(function(e,r){
+		if (!e) {
+			if (r.length) {
+				res.send(JSON.stringify(r[0],null,' '));
+			} else if (r.length==0) {
+				const errmsg = 'Message not found';
+				res.status(404).send(JSON.stringify({err_msg:errmsg},null,' '));
+			}
+		} else {res.send('["connection_error"]')}
+	});
 }).post('/:hash', function(req,res) {
 	res.send("No POST just GET");
 });
 
 mongo.connect('mongodb://'+DBACC+':'+DBPWD+'@'+DBHOST+'/andy-bit', (e,dbcli)=>{
-	if(e) return console.log(e);
+	if(e) { console.log(e); return false; }
 	db = dbcli.db('andy-bit');
 	var server = app.listen(8080, ()=>{console.log("http://localhost:8080");})
 });
