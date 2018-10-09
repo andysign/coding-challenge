@@ -8,30 +8,32 @@
 * http://<IP>:8080/messages/12...
 */
 
+// Get all the libraries needed
 const express = require('express');
 const mongo = require('mongodb');
 const parser = require('body-parser');
 const crypto = require('crypto');
 const app = express();
 const router = new express.Router();
-
+// The secret db password
 const DBPWD = process.env.DBPWD ? process.env.DBPWD : process.argv[2];
-
+// The db connection
 const DBHOST = 'ds125263.mlab.com:25263';
 const DBACC  = 'guest';
+const MLABACC= 'andy-bit';
 
 let db;
 
-
+// Index page as in domain.com/
 app.get('/', function(req,res) {
 	res.send('<html><head><title>Index</title></head><body>'+
-	'<b>Move along people, nothing to see here!</b>'+
+	'<b>Move along, nothing to see here!</b> <a href="/messages">form</a>?'+
 	'</body></body></html>');
 }).post('/', function(req,res){ res.status(404).end('404'); });
-
+// Create router for /messages and /messages/HASH
 app.use(parser.urlencoded({extended:true}))
 	.use('/messages', router);
-
+// Create form and db save function
 router.get('', function(req,res) {
 	res.send('<html><head><title>Sha</title></head><body>'+
 	'<h2>Submit message for sha256 hashing</h2>'+
@@ -42,15 +44,26 @@ router.get('', function(req,res) {
 }).post('', function(req,res) {
 	let message = req.body.message;
 	let hash = crypto.createHash('sha256').update(message).digest('hex');
-	res.send(hash);
+	let th = this;//,{projection:{_id:0,hash:0}}
+	let dbcol = db.collection('messages');
+	dbcol.find({hash:hash}).limit(1).toArray(function(e,r){
+		if (r.length==0) {
+			dbcol.save({message:message,hash:hash},(err,rep)=>{
+				if (err) { console.log(0); return false; }
+				res.send(/*'Not saved before ' +*/ hash);
+			});
+		} else {
+			res.send(/*'Already found ' +*/ hash);
+		}
+	});
 });
-
+// Get the GET hash and spit out the original msg or else show 404 error
 router.get('/:hash([a-fA-F0-9]+)', function(req,res) {
 	res.set({'Content-Type': 'application/json'});
 	let hash = req.params.hash;
-	let cursor = db.collection('messages')
-					.find({hash:hash},{projection:{_id:0,hash:0}}).limit(1);
-	cursor.toArray(function(e,r){
+	db.collection('messages')
+	.find({hash:hash},{projection:{_id:0,hash:0}}).limit(1)
+	.toArray(function(e,r){
 		if (!e) {
 			if (r.length) {
 				res.send(JSON.stringify(r[0],null,' '));
@@ -61,10 +74,10 @@ router.get('/:hash([a-fA-F0-9]+)', function(req,res) {
 		} else {res.send('["connection_error"]')}
 	});
 }).post('/:hash', function(req,res) {
-	res.send("No POST just GET");
+	res.send("No POST allowed, just GET");
 });
 
-mongo.connect('mongodb://'+DBACC+':'+DBPWD+'@'+DBHOST+'/andy-bit', (e,dbcli)=>{
+mongo.connect('mongodb://'+DBACC+':'+DBPWD+'@'+DBHOST+'/'+MLABACC, (e,dbcli)=>{
 	if(e) { console.log(e); return false; }
 	db = dbcli.db('andy-bit');
 	var server = app.listen(8080, ()=>{console.log("http://localhost:8080");})
