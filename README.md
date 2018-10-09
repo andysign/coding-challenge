@@ -53,7 +53,54 @@ What is required for this challange
 
 ## Solution
 
-TBA!
+The app can be review at: **[http://3.8.41.27:8080/](http://3.8.41.27:8080)**
+
+The code can be found in [challenge1](challenge1) / [app.js](challenge1/app.js) and the entire approach is a *Nodejs-8* plus *MongoDb* web based service with the `body-parser`, `express` and `mongodb` *npms*.
+
+In the Linux virtual machine / Testing machine with docker, run `export DBPWD=password` to before anything then install what's needed and then run the app in background with:
+
+`nohup node app.js >> log 2>> log &`
+
+OR
+
+`nohup node app.js password >> log 2>> log &`
+
+The application script will take the message posted trough the html form provided trough the messages/ router and hash that message (**sha256** using *crypto.js*) and save that hash in a *mongodb document* (after checking if the information is not already there). Finally the application script will also check if a provided hash is already saved in the database and display the message or display page not found if not.
+
+Testing was done both with *curl* and with a normal browser as seen below:
+
+A simple post with the message foo
+
+```shell
+root@express:~/myprj# curl -X POST --data 'message=foo' http://localhost:8080/messages/ && echo
+2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae
+```
+
+Then a simple check for 2c2...
+
+```shell
+root@express:~/myprj# curl http://localhost:8080/messages/2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae && echo
+{
+ "message": "foo"
+}
+```
+
+Then finally test the page not found message
+
+```shell
+root@express:~/myprj# curl -i http://localhost:8080/messages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa && echo
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 35
+ETag: W/"23-rpDNi/ZlZdMC2ioe7G+yNl+c+7o"
+Date: Tue, 09 Oct 2018 16:57:05 GMT
+Connection: keep-alive
+
+{
+ "err_msg": "Message not found"
+}
+```
 
 ----
 
@@ -160,7 +207,7 @@ What is required for this challange
 > $ myprogram X0
 > 00
 > 10
-
+>
 > $ myprogram 10X10X0
 > 1001000
 > 1001010
